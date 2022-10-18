@@ -17,6 +17,15 @@
 // If this file is called directly, abort.
 defined('ABSPATH') || exit;
 
+define('WPL_VERSION', rand());
+define('WPL_DIR', plugin_dir_path(__FILE__));
+define('WPL_URL', plugin_dir_url(__FILE__));
+define('WPL_TEXTDOMAIN', 'wp-pay-later');
+
+// Include all the class
+include_once 'includes/CreatePage.php';
+include_once 'includes/ShortCode.php';
+
 // Make sure WooCommerce is active
 if (!in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))) {
 	add_action('admin_notices', 'wpl_admin_notice');
@@ -30,16 +39,9 @@ function wpl_admin_notice()
     </div>
     <?php
 }
-// public function constant()
-// 		{
-// 			define('WPL_VERSION', rand());
-// 			define('WPL_DIR', plugin_dir_path(__FILE__));
-// 			define('WPL_URL', plugin_dir_url(__FILE__));
-// 			define('WPL_TEXTDOMAIN', 'wp-pay-later');
-// 		}
 
-// Main Plugin Class
-//WPPAYLATER
+// Register activation hook
+register_activation_hook(__FILE__, 'activate');
 
 /*
  * Register new method to the payment gateway
@@ -77,12 +79,10 @@ function wpl_init_gateway_class()
 			// This action hook saves the settings
 			add_action('woocommerce_update_options_payment_gateways_' . $this->id, [$this, 'process_admin_options']);
 
-			// You can also register a webhook here
-			// add_action( 'woocommerce_api_{webhook name}', array( $this, 'webhook' ) );
-
-			//$this->process_payment();
-
+			// Generate link to thank you page
 			add_action('woocommerce_thankyou', [$this, 'generate_pay_later_link']);
+
+			//$this->activate();
 		}
 
 		public function init_form_fields()
@@ -146,4 +146,14 @@ function wpl_init_gateway_class()
 			echo $final_url;
 		}
 	}
+}
+
+// Activation function
+function activate()
+{
+	// Create Page to admin
+	$create_page = new Create_Page();
+
+	// Create available payment methods shortcode
+	$create_short_code = new Create_Short_Code();
 }
