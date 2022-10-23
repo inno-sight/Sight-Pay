@@ -31,14 +31,14 @@ function wpl_admin_notice()
 {
 	?>
     <div class="notice notice-error">
-        <p><?php _e('Please install and active WooCommerce!', 'wp-pay-later'); ?></p>
+        <p><?php _e('Please install and active WooCommerce!', WPL_TEXTDOMAIN); ?></p>
     </div>
     <?php
 }
 
 // Include all the class
-include_once 'includes/CreatePage.php';
-include_once 'includes/ShortCode.php';
+// include_once 'includes/CreatePage.php';
+// include_once 'includes/ShortCode.php';
 include_once 'includes/GateWay.php';
 
 class WP_PAY_LATER_MAIN
@@ -77,7 +77,7 @@ class WP_PAY_LATER_MAIN
 		$pay_later_page  = $checkout_URL . 'order-pay/' . $order_id . '/?pay_for_order=true&key=' . $key;
 		$final_url       = '<div class="wp-pay-later-wrapper">';
 		$final_url .= '<p>';
-		$final_url .= 'Save the below link to pay later';
+		$final_url .= __('Save the below link to pay later', WPL_TEXTDOMAIN);
 		$final_url .= '</p>';
 		$final_url .= '<a href="' . $pay_later_page . '">';
 		$final_url .= $pay_later_page;
