@@ -23,8 +23,7 @@ class Create_Page
 			// create post object
 			$page = [
 				'post_title'   => __('WP Pay Later'),
-				'post_content' => do_shortcode(' [print_available_payment] '),
-				//'post_content' => 'Hello WP Pay Later',
+				'post_content' => '<!-- wp:shortcode -->[print_available_payment]<!-- /wp:shortcode -->',
 				'post_status'  => 'publish',
 				'post_author'  => $current_user->ID,
 				'post_type'    => 'page',

@@ -22,10 +22,6 @@ define('WPL_DIR', plugin_dir_path(__FILE__));
 define('WPL_URL', plugin_dir_url(__FILE__));
 define('WPL_TEXTDOMAIN', 'wp-pay-later');
 
-// Include all the class
-include_once 'includes/CreatePage.php';
-include_once 'includes/ShortCode.php';
-
 // Make sure WooCommerce is active
 if (!in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))) {
 	add_action('admin_notices', 'wpl_admin_notice');
@@ -40,120 +36,56 @@ function wpl_admin_notice()
     <?php
 }
 
-// Register activation hook
-register_activation_hook(__FILE__, 'activate');
+// Include all the class
+include_once 'includes/CreatePage.php';
+include_once 'includes/ShortCode.php';
+include_once 'includes/GateWay.php';
 
-/*
- * Register new method to the payment gateway
- */
-add_filter('woocommerce_payment_gateways', 'wpl_add_to_gateway');
-function wpl_add_to_gateway($gateways)
+class WP_PAY_LATER_MAIN
 {
-	$gateways[] = 'WP_PAY_LATER';
-	return $gateways;
-}
-
-// Init the plugin
-add_action('plugins_loaded', 'wpl_init_gateway_class');
-function wpl_init_gateway_class()
-{
-	class WP_PAY_LATER extends WC_Payment_Gateway
+	public function __construct()
 	{
-		public function __construct()
-		{
-			$this->id                 = 'wp_pay_later'; // payment gateway plugin ID
-			$this->icon               = ''; // URL of the icon that will be displayed on checkout page near your gateway name
-			$this->has_fields         = false; // in case you need a custom credit card form
-			$this->method_title       = 'WP Pay Later';
-			$this->method_description = 'Buy now and pay later'; // will be displayed on the options page
+		// Register activation hook
+		register_activation_hook(__FILE__, [$this, 'activate']);
 
-			// Method with all the options fields
-			$this->init_form_fields();
+		//ShortCode
+		$this->call_shortcode_class();
 
-			// Load the settings.
-			$this->init_settings();
-			$this->title           = $this->get_option('title');
-			$this->description     = $this->get_option('description');
-			$this->enabled         = $this->get_option('enabled');
+		// Generate link to thank you page
+		add_action('woocommerce_thankyou', [$this, 'generate_pay_later_link']);
+	}
 
-			// This action hook saves the settings
-			add_action('woocommerce_update_options_payment_gateways_' . $this->id, [$this, 'process_admin_options']);
+	// Activation function
+	public function activate()
+	{
+		// Create Page to admin
+		$create_page = new Create_Page();
+	}
 
-			// Generate link to thank you page
-			add_action('woocommerce_thankyou', [$this, 'generate_pay_later_link']);
+	//Create Page Content ShortCode
+	public function call_shortcode_class()
+	{
+		$shortcode = new Create_Short_Code();
+	}
 
-			//$this->activate();
-		}
+	public function generate_pay_later_link($order_id)
+	{
+		global $woocommerce;
+		$order     = new WC_Order($order_id);
 
-		public function init_form_fields()
-		{
-			$this->form_fields = [
-				'enabled' => [
-					'title'       => 'Enable/Disable',
-					'label'       => 'Enable WP Pay Later',
-					'type'        => 'checkbox',
-					'description' => '',
-					'default'     => 'no'
-				],
-				'title' => [
-					'title'       => 'Title',
-					'type'        => 'text',
-					'description' => 'This controls the title which the user sees during checkout.',
-					'default'     => 'WP Pay Later',
-					'desc_tip'    => true,
-				],
-				'description' => [
-					'title'       => 'Description',
-					'type'        => 'textarea',
-					'description' => 'This controls the description which the user sees during checkout.',
-					'default'     => 'Buy now and pay later',
-				],
-			];
-		}
-
-		public function process_payment($order_id)
-		{
-			global $woocommerce;
-			$order = new WC_Order($order_id);
-
-			// Mark as on-hold (we're awaiting the cheque)
-			$order->update_status('on-hold', __('Pay Later', 'woocommerce'));
-
-			// Remove cart
-			$woocommerce->cart->empty_cart();
-
-			// Return thankyou redirect
-			return [
-				'result'   => 'success',
-				'redirect' => $this->get_return_url($order)
-			];
-		}
-
-		public function generate_pay_later_link($order_id)
-		{
-			global $woocommerce;
-			$order     = new WC_Order($order_id);
-			$site_url  = site_url();
-			$key       = '/?order_id=' . $order_id;
-			$final_url = '<div class="wp-pay-later-wrapper">';
-			$final_url .= '<p>';
-			$final_url .= 'Save the below link to pay later';
-			$final_url .= '</p>';
-			$final_url .= '<a>';
-			$final_url .= $site_url . $key  ;
-			$final_url .= '</a>';
-			$final_url .= '</div>';
-			echo $final_url;
-		}
+		$pay_later_page  = get_permalink(get_page_by_title('WP Pay Later'));
+		$key             = '/?order_id=' . $order_id;
+		$final_url       = '<div class="wp-pay-later-wrapper">';
+		$final_url .= '<p>';
+		$final_url .= 'Save the below link to pay later';
+		$final_url .= '</p>';
+		$final_url .= '<a>';
+		$final_url .= $pay_later_page . $key  ;
+		$final_url .= '</a>';
+		$final_url .= '</div>';
+		echo $final_url;
 	}
 }
 
-// Activation function
-function activate()
-{
-	// Create Page to admin
-	$create_page = new Create_Page();
-
-	// Create available payment methods shortcode
-	$create_short_code = new Create_Short_Code();
-}
+// Call The Class
+$wp_pay_later_main = new WP_PAY_LATER_MAIN();
