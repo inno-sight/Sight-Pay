@@ -70,7 +70,7 @@ function wpl_init_gateway_class()
 			$order = new WC_Order($order_id);
 
 			// Mark as on-hold (we're awaiting the cheque)
-			$order->update_status('on-hold', __('Pay Later', 'woocommerce'));
+			$order->update_status('pending-payment ', __('Pay Later', 'woocommerce'));
 
 			// Remove cart
 			$woocommerce->cart->empty_cart();
@@ -81,7 +81,5 @@ function wpl_init_gateway_class()
 				'redirect' => $this->get_return_url($order)
 			];
 		}
-
-		
 	}
 }

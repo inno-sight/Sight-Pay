@@ -49,7 +49,7 @@ class WP_PAY_LATER_MAIN
 		register_activation_hook(__FILE__, [$this, 'activate']);
 
 		//ShortCode
-		$this->call_shortcode_class();
+		//$this->call_shortcode_class();
 
 		// Generate link to thank you page
 		add_action('woocommerce_thankyou', [$this, 'generate_pay_later_link']);
@@ -59,28 +59,28 @@ class WP_PAY_LATER_MAIN
 	public function activate()
 	{
 		// Create Page to admin
-		$create_page = new Create_Page();
+		//$create_page = new Create_Page();
 	}
 
 	//Create Page Content ShortCode
-	public function call_shortcode_class()
-	{
-		$shortcode = new Create_Short_Code();
-	}
+	// public function call_shortcode_class()
+	// {
+	// 	$shortcode = new Create_Short_Code();
+	// }
 
 	public function generate_pay_later_link($order_id)
 	{
 		global $woocommerce;
-		$order     = new WC_Order($order_id);
-
-		$pay_later_page  = get_permalink(get_page_by_title('WP Pay Later'));
-		$key             = '/?order_id=' . $order_id;
+		$order           = new WC_Order($order_id);
+		$checkout_URL    = wc_get_checkout_url();
+		$key             = $order->get_order_key();
+		$pay_later_page  = $checkout_URL . 'order-pay/' . $order_id . '/?pay_for_order=true&key=' . $key;
 		$final_url       = '<div class="wp-pay-later-wrapper">';
 		$final_url .= '<p>';
 		$final_url .= 'Save the below link to pay later';
 		$final_url .= '</p>';
-		$final_url .= '<a>';
-		$final_url .= $pay_later_page . $key  ;
+		$final_url .= '<a href="' . $pay_later_page . '">';
+		$final_url .= $pay_later_page;
 		$final_url .= '</a>';
 		$final_url .= '</div>';
 		echo $final_url;
