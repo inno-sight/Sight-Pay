@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:       Sight Pay
- * Plugin URI:        #
+ * Plugin URI:        https://wordpress.org/plugins/sight-pay
  * Description:       Buy now and pay later with WooCommerce payment system.
  * Version:           1.0.0
  * Requires at least: 5.2
