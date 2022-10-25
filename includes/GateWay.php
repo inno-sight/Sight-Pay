@@ -2,25 +2,25 @@
 /*
  * Register new method to the payment gateway
  */
-add_filter('woocommerce_payment_gateways', 'wpl_add_to_gateway');
-function wpl_add_to_gateway($gateways)
+add_filter('woocommerce_payment_gateways', 'sp_add_to_gateway');
+function sp_add_to_gateway($gateways)
 {
-	$gateways[] = 'WP_PAY_LATER';
+	$gateways[] = 'SIGHT_PAY';
 	return $gateways;
 }
 
 // Init the plugin
-add_action('plugins_loaded', 'wpl_init_gateway_class');
-function wpl_init_gateway_class()
+add_action('plugins_loaded', 'sp_init_gateway_class');
+function sp_init_gateway_class()
 {
-	class WP_PAY_LATER extends WC_Payment_Gateway
+	class SIGHT_PAY extends WC_Payment_Gateway
 	{
 		public function __construct()
 		{
-			$this->id                 = 'wp_pay_later'; // payment gateway plugin ID
+			$this->id                 = 'sight_pay'; // payment gateway plugin ID
 			$this->icon               = ''; // URL of the icon that will be displayed on checkout page near your gateway name
 			$this->has_fields         = false; // in case you need a custom credit card form
-			$this->method_title       = 'WP Pay Later';
+			$this->method_title       = 'Sight Pay';
 			$this->method_description = 'Buy now and pay later'; // will be displayed on the options page
 
 			// Method with all the options fields
@@ -42,8 +42,8 @@ function wpl_init_gateway_class()
 		{
 			$this->form_fields = [
 				'enabled' => [
-					'title'       => 'Enable/Disable',
-					'label'       => 'Enable WP Pay Later',
+					'title'       => __('Enable/Disable', SP_TEXTDOMAIN),
+					'label'       => __('Enable Sight Pay', SP_TEXTDOMAIN),
 					'type'        => 'checkbox',
 					'description' => '',
 					'default'     => 'no'
@@ -51,15 +51,15 @@ function wpl_init_gateway_class()
 				'title' => [
 					'title'       => 'Title',
 					'type'        => 'text',
-					'description' => 'This controls the title which the user sees during checkout.',
-					'default'     => 'WP Pay Later',
+					'description' => __('This controls the title which the user sees during checkout.', SP_TEXTDOMAIN),
+					'default'     => __('Sight Pay', SP_TEXTDOMAIN),
 					'desc_tip'    => true,
 				],
 				'description' => [
 					'title'       => 'Description',
 					'type'        => 'textarea',
-					'description' => 'This controls the description which the user sees during checkout.',
-					'default'     => 'Buy now and pay later',
+					'description' => __('This controls the description which the user sees during checkout.', SP_TEXTDOMAIN),
+					'default'     => __('Buy now and pay later', SP_TEXTDOMAIN),
 				],
 			];
 		}
@@ -70,7 +70,7 @@ function wpl_init_gateway_class()
 			$order = new WC_Order($order_id);
 
 			// Mark as on-hold (we're awaiting the cheque)
-			$order->update_status('pending-payment ', __('Pay Later', 'woocommerce'));
+			$order->update_status('pending-payment ', __('Sight Pay', SP_TEXTDOMAIN));
 
 			// Remove cart
 			$woocommerce->cart->empty_cart();
