@@ -12,3 +12,11 @@
  * Text Domain:       sight-pay
  * Domain Path:       /languages
  */
+
+
+Basic user guide:
+1. Install the Plugin
+2. Install the dependent WooCommerce Plugin
+3. GoTo>WooCommerce>Settings>Payments>Enable Sight Pay
+4. When checking out with a product select sight pay. 
+5. In the thank you page you will see a link to pay later.
