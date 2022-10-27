@@ -2,16 +2,16 @@
 /*
  * Register new method to the payment gateway
  */
-add_filter('woocommerce_payment_gateways', 'sp_add_to_gateway');
-function sp_add_to_gateway($gateways)
+add_filter('woocommerce_payment_gateways', 'innosp_add_to_gateway');
+function innosp_add_to_gateway($gateways)
 {
 	$gateways[] = 'SIGHT_PAY';
 	return $gateways;
 }
 
 // Init the plugin
-add_action('plugins_loaded', 'sp_init_gateway_class');
-function sp_init_gateway_class()
+add_action('plugins_loaded', 'innosp_init_gateway_class');
+function innosp_init_gateway_class()
 {
 	class SIGHT_PAY extends WC_Payment_Gateway
 	{
@@ -42,8 +42,8 @@ function sp_init_gateway_class()
 		{
 			$this->form_fields = [
 				'enabled' => [
-					'title'       => __('Enable/Disable', SP_TEXTDOMAIN),
-					'label'       => __('Enable Sight Pay', SP_TEXTDOMAIN),
+					'title'       => __('Enable/Disable', INNOSP_TEXTDOMAIN),
+					'label'       => __('Enable Sight Pay', INNOSP_TEXTDOMAIN),
 					'type'        => 'checkbox',
 					'description' => '',
 					'default'     => 'no'
@@ -51,15 +51,15 @@ function sp_init_gateway_class()
 				'title' => [
 					'title'       => 'Title',
 					'type'        => 'text',
-					'description' => __('This controls the title which the user sees during checkout.', SP_TEXTDOMAIN),
-					'default'     => __('Sight Pay', SP_TEXTDOMAIN),
+					'description' => __('This controls the title which the user sees during checkout.', INNOSP_TEXTDOMAIN),
+					'default'     => __('Sight Pay', INNOSP_TEXTDOMAIN),
 					'desc_tip'    => true,
 				],
 				'description' => [
 					'title'       => 'Description',
 					'type'        => 'textarea',
-					'description' => __('This controls the description which the user sees during checkout.', SP_TEXTDOMAIN),
-					'default'     => __('Buy now and pay later', SP_TEXTDOMAIN),
+					'description' => __('This controls the description which the user sees during checkout.', INNOSP_TEXTDOMAIN),
+					'default'     => __('Buy now and pay later', INNOSP_TEXTDOMAIN),
 				],
 			];
 		}
@@ -70,7 +70,7 @@ function sp_init_gateway_class()
 			$order = new WC_Order($order_id);
 
 			// Mark as on-hold (we're awaiting the cheque)
-			$order->update_status('pending-payment ', __('Sight Pay', SP_TEXTDOMAIN));
+			$order->update_status('pending-payment ', __('Sight Pay', INNOSP_TEXTDOMAIN));
 
 			// Remove cart
 			$woocommerce->cart->empty_cart();

@@ -1,0 +1,49 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Sight Pay\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-10-27 04:45+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.6.3; wp-6.0.3\n"
+"X-Domain: sight-pay"
+
+#. Description of the plugin
+msgid "Buy now and pay later with WooCommerce payment system."
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://theinnosight.com/"
+msgstr ""
+
+#. URI of the plugin
+msgid "https://wordpress.org/plugins/sight-pay"
+msgstr ""
+
+#. Author of the plugin
+msgid "innosight"
+msgstr ""
+
+#. Name of the plugin
+msgid "Sight Pay"
+msgstr ""
+
+msgid "Please install and active WooCommerce!"
+msgstr ""
+
+msgid "Save the below link to pay later"
+msgstr ""
+
+msgid "Buy now and pay later"
+msgstr ""
+
+msgid "Enable Sight Pay"
+msgstr ""
