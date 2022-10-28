@@ -3,7 +3,7 @@
  * Plugin Name:       Sight Pay
  * Plugin URI:        https://wordpress.org/plugins/sight-pay
  * Description:       Buy now and pay later with WooCommerce payment system.
- * Version:           1.1.0
+ * Version:           1.2.0
  * Author:            innosight
  * Author URI:        https://theinnosight.com/
  * License:           GPL-2.0+
@@ -14,7 +14,7 @@
 // If this file is called directly, abort.
 defined('ABSPATH') || exit;
 
-define('INNOSP_VERSION', '1.1.0');
+define('INNOSP_VERSION', '1.2.0');
 define('INNOSP_DIR', plugin_dir_path(__FILE__));
 define('INNOSP_URL', plugin_dir_url(__FILE__));
 define('INNOSP_TEXTDOMAIN', 'sight-pay');
@@ -28,7 +28,7 @@ function innosp_admin_notice()
 {
 	?>
     <div class="notice notice-error">
-        <p><?php _e('Please install and active WooCommerce!', INNOSP_TEXTDOMAIN); ?></p>
+        <p><?php esc_html_e('Please install and active WooCommerce!', INNOSP_TEXTDOMAIN); ?></p>
     </div>
     <?php
 }
@@ -47,19 +47,30 @@ class INNOSP_FREE
 	public function generate_pay_later_link($order_id)
 	{
 		global $woocommerce;
-		$order           = new WC_Order($order_id);
-		$checkout_URL    = wc_get_checkout_url();
-		$key             = $order->get_order_key();
-		$pay_later_page  = $checkout_URL . 'order-pay/' . $order_id . '/?pay_for_order=true&key=' . $key;
-		$final_url       = '<div class="sight-pay-wrapper">';
-		$final_url .= '<p>';
-		$final_url .= __('Save the below link to pay later', INNOSP_TEXTDOMAIN);
-		$final_url .= '</p>';
-		$final_url .= '<a href="' . $pay_later_page . '">';
-		$final_url .= $pay_later_page;
-		$final_url .= '</a>';
-		$final_url .= '</div>';
-		echo $final_url;
+		$order                  = new WC_Order($order_id);
+		$checkout_URL           = wc_get_checkout_url();
+		$key                    = $order->get_order_key();
+		$pay_later_page         = $checkout_URL . 'order-pay/' . $order_id . '/?pay_for_order=true&key=' . $key;
+		$wrapper_with_url       = '<div class="' . esc_attr('sight-pay-wrapper') . '">';
+		$wrapper_with_url .= '<p>';
+		$wrapper_with_url .= __('Save the below link to pay later', INNOSP_TEXTDOMAIN);
+		$wrapper_with_url .= '</p>';
+		$wrapper_with_url .= '<a href="' . esc_url($pay_later_page) . '">';
+		$wrapper_with_url .= esc_url($pay_later_page);
+		$wrapper_with_url .= '</a>';
+		$wrapper_with_url .= '</div>';
+		$allowed_html = [
+			'a' => [
+				'href'  => true,
+				'title' => true,
+			],
+			'div' => [
+				'class' => []
+			],
+			'p'=> [
+			]
+		];
+		echo wp_kses($wrapper_with_url, $allowed_html);
 	}
 }
 
