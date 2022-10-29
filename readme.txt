@@ -2,6 +2,7 @@
 Contributors: rakibwordpress
 Tags: payment, pay later, woocommerce payment, payment method, payment for woocommerce
 Requires at least: 5.2
+Requires PHP: 7.4
 Tested up to: 6.0.3
 Stable tag: 1.2.0
 License: GPLv2 or later
@@ -86,6 +87,11 @@ In the search field type "sight-pay". Once you have found it you can install it 
 * Extract the sight-pay directory to your computer
 * Upload the sight-pay directory to the /wp-content/plugins/ directory
 * Activate the plugin in the Plugin dashboard
+
+== Changelog ==
+
+= 1.2.0 =
+* Escaped some variables.
 
 = 1.1.0 =
 * Initial Release
