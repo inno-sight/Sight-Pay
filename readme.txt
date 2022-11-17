@@ -14,8 +14,7 @@ Boost your order with sight Pay.
 
 **Sight Pay** Buy now and pay later with WooCommerce payment system.
 
-This plugin works perfectly with already existing woocommerce payments system.
-
+With SightPay, you can order your desired product and pay later. This plugin is based on Woocommerce and has the ability to generate unique payment links. With the help of this plugin, you can create a feeling of trust among your customers and make them more willing to purchase your products.
 
 = Key Features =
 * Works with any payment method.
