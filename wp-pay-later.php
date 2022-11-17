@@ -2,8 +2,8 @@
 /**
  * Plugin Name:       Sight Pay
  * Plugin URI:        https://wordpress.org/plugins/sight-pay
- * Description:       Buy now and pay later with WooCommerce payment system.
- * Version:           1.2.0
+ * Description:       Sight Pay is an awesome new way to shop | Pay later plugin for woocommerce
+ * Version:           1.2.1
  * Author:            innosight
  * Author URI:        https://theinnosight.com/
  * License:           GPL-2.0+

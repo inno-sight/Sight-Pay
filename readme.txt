@@ -1,6 +1,6 @@
-=== Sight Pay - Buy now and pay later with WooCommerce payment system. ===
-Contributors: rakibwordpress
-Tags: payment, pay later, woocommerce payment, payment method, payment for woocommerce
+=== Sight Pay - is an awesome new way to shop! Get anything you want, and pay for it later. ===
+Contributors: rakibwordpress, innosight
+Tags: payment, pay later, woocommerce payment, payment method, payment for woocommerce, pay later plugin for woocommerce
 Requires at least: 5.2
 Requires PHP: 7.4
 Tested up to: 6.0.3
@@ -8,11 +8,11 @@ Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Boost your order with sight Pay.
+
 
 == Description ==
 
-**Sight Pay** Buy now and pay later with WooCommerce payment system.
+**Sight Pay** is an awesome new way to shop! Get anything you want, and pay for it later. Best pay later plugin for woocommerce
 
 With SightPay, you can order your desired product and pay later. This plugin is based on Woocommerce and has the ability to generate unique payment links. With the help of this plugin, you can create a feeling of trust among your customers and make them more willing to purchase your products.
 
@@ -88,6 +88,9 @@ In the search field type "sight-pay". Once you have found it you can install it 
 * Activate the plugin in the Plugin dashboard
 
 == Changelog ==
+
+= 1.2.1 =
+* Doc updated
 
 = 1.2.0 =
 * Escaped some variables.
