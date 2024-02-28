@@ -89,6 +89,9 @@ In the search field type "sight-pay". Once you have found it you can install it 
 
 == Changelog ==
 
+= 1.2.2 =
+* Compatibility with wordpress 6.4.3
+
 = 1.2.1 =
 * Doc updated
 
