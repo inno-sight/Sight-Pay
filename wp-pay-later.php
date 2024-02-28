@@ -3,7 +3,7 @@
  * Plugin Name:       Sight Pay
  * Plugin URI:        https://wordpress.org/plugins/sight-pay
  * Description:       Sight Pay is an awesome new way to shop | Pay later plugin for woocommerce
- * Version:           1.2.1
+ * Version:           1.2.2
  * Author:            innosight
  * Author URI:        https://theinnosight.com/
  * License:           GPL-2.0+
@@ -14,7 +14,7 @@
 // If this file is called directly, abort.
 defined('ABSPATH') || exit;
 
-define('INNOSP_VERSION', '1.2.0');
+define('INNOSP_VERSION', '1.2.2');
 define('INNOSP_DIR', plugin_dir_path(__FILE__));
 define('INNOSP_URL', plugin_dir_url(__FILE__));
 define('INNOSP_TEXTDOMAIN', 'sight-pay');
